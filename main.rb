@@ -69,10 +69,14 @@ class Board
         @board[index_one][index_two] = new_number
         drawboard
     end 
+
+    def return_value(index_one, index_two)
+        @board[index_one][index_two]
+    end 
 end 
 
 board = Board.new
-# board.array_values
+board.array_values
 board.drawboard
 # board.update_board(1,1,'x')
 
@@ -84,7 +88,7 @@ player_one.ask_piece(player_one.name)
 player_two.ask_piece(player_two.name)
 
 
-def place_piece(number, board, player)
+def play_game(number, board, player)
     if number == 1
         board.update_board(0,0, player.piece)    
     elsif number == 2
@@ -106,13 +110,58 @@ def place_piece(number, board, player)
     end 
 end 
 
-place_piece(player_one.choose_number, board, player_one)
-
-def play_game(number, board, player)
-    place_piece(number, board, player)
-end 
-
-2.times do
+loop do
     play_game(player_one.choose_number, board, player_one)
+    if board.return_value(0,0) == 'X' && board.return_value(1,0) == 'X' && board.return_value(2,0) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(0,1) == 'X' && board.return_value(1,1) == 'X' && board.return_value(2,1) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(0,2) == 'X' && board.return_value(1,2) == 'X' && board.return_value(2,2) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(0,0) == 'X' && board.return_value(0,1) == 'X' && board.return_value(0,2) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(1,0) == 'X' && board.return_value(1,1) == 'X' && board.return_value(1,2) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(2,0) == 'X' && board.return_value(2,1) == 'X' && board.return_value(2,2) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(0,0) == 'X' && board.return_value(1,1) == 'X' && board.return_value(2,2) == 'X'
+        puts 'X wins!'
+        break
+    elsif board.return_value(0,2) == 'X' && board.return_value(1,1) == 'X' && board.return_value(1,2) == 'X'
+        puts 'X wins!'
+        break
+    end 
     play_game(player_two.choose_number, board, player_two)
+    if board.return_value(0,0) == 'O' && board.return_value(1,0) == 'O' && board.return_value(2,0) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(0,1) == 'O' && board.return_value(1,1) == 'O' && board.return_value(2,1) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(0,2) == 'O' && board.return_value(1,2) == 'O' && board.return_value(2,2) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(0,0) == 'O' && board.return_value(0,1) == 'O' && board.return_value(0,2) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(1,0) == 'O' && board.return_value(1,1) == 'O' && board.return_value(1,2) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(2,0) == 'O' && board.return_value(2,1) == 'O' && board.return_value(2,2) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(0,0) == 'O' && board.return_value(1,1) == 'O' && board.return_value(2,2) == 'O'
+        puts 'O wins!'
+        break
+    elsif board.return_value(0,2) == 'O' && board.return_value(1,1) == 'O' && board.return_value(1,2) == 'O'
+        puts 'O wins!'
+        break
+    end 
 end 
+
