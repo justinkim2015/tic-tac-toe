@@ -155,7 +155,7 @@ loop do
     elsif board.return_value(0,0) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,2) == player_one.piece
         puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(1,2) == player_one.piece
+    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,0) == player_one.piece
         puts "#{player_one.name} wins!"
         break
     end 
@@ -193,7 +193,7 @@ loop do
     elsif board.return_value(0,0) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,2) == player_two.piece
         puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(1,2) == player_two.piece
+    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,0) == player_two.piece
         puts "#{player_two.name} wins!"
         break
     end 
@@ -250,7 +250,7 @@ end
 #         puts "#{player_piece} wins!"
 #     elsif board.return_value(0,0) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,2) == player_piece
 #         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,2) == player_piece && board.return_value(1,1) == player_piece && board.return_value(1,2) == player_piece
+#     elsif board.return_value(0,2) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,0) == player_piece
 #         puts "#{player_piece} wins!"
 #     end 
 #     if board.return_value(0,0) != 1 &&   
