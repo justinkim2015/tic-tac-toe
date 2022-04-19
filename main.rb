@@ -29,24 +29,28 @@ end
 
 module GameFunctions
     def play_game(number, board, player_piece)
-        if number == 1
+        if number == 1 && (board.return_value(0,0) != 'X' && board.return_value(0,0) != 'O')
             board.update_board(0,0, player_piece)    
-        elsif number == 2
+        elsif number == 2 && (board.return_value(0,1) != 'X' && board.return_value(0,1) != 'O')
             board.update_board(0,1, player_piece)
-        elsif number == 3
+        elsif number == 3 && (board.return_value(0,2) != 'X' && board.return_value(0,2) != 'O')
             board.update_board(0,2, player_piece)
-        elsif number == 4
+        elsif number == 4 && (board.return_value(1,0) != 'X' && board.return_value(1,0) != 'O')
             board.update_board(1,0, player_piece)
-        elsif number == 5
+        elsif number == 5 && (board.return_value(1,1) != 'X' && board.return_value(1,1) != 'O')
             board.update_board(1,1, player_piece)
-        elsif number == 6
+        elsif number == 6 && (board.return_value(1,2) != 'X' && board.return_value(1,2) != 'O')
             board.update_board(1,2, player_piece)
-        elsif number == 7
+        elsif number == 7 && (board.return_value(2,0) != 'X' && board.return_value(2,0) != 'O')
             board.update_board(2,0, player_piece)
-        elsif number == 8
+        elsif number == 8 && (board.return_value(2,1) != 'X' && board.return_value(2,1) != 'O')
             board.update_board(2,1, player_piece)
-        else
+        elsif number == 9 && (board.return_value(2,2) != 'X' && board.return_value(2,2) != 'O')
             board.update_board(2,2, player_piece)
+        else 
+            puts "INVALID PLACEMENT, INPUT AGAIN"
+            new_number = gets.chomp.to_i
+            play_game(new_number, board, player_piece)
         end 
     end 
 end 
@@ -98,12 +102,7 @@ class Board
     end 
     
     def update_board(index_one, index_two, new_value)
-        if @board[index_one][index_two] != "X" && @board[index_one][index_two] != "O"
-            @board[index_one][index_two] = new_value
-        else
-            puts "INVALID SPACE, TRY AGAIN"
-            value = gets.chomp
-        end 
+        @board[index_one][index_two] = new_value
         drawboard
     end 
  
@@ -121,7 +120,6 @@ player_one = Player.new("","")
 player_two = Player.new("","")
 player_one.ask_name
 player_two.ask_name
-
 player_one.ask_piece(player_one.name)
 player_two.ask_piece(player_two.name)
 
@@ -161,6 +159,18 @@ loop do
         puts "#{player_one.name} wins!"
         break
     end 
+    if board.return_value(0,0) != 1 &&   
+        board.return_value(0,1) != 2 &&  
+        board.return_value(0,2) != 3 &&  
+        board.return_value(1,0) != 4 &&  
+        board.return_value(1,1) != 5 &&  
+        board.return_value(1,2) != 6 &&  
+        board.return_value(2,0) != 7 &&  
+        board.return_value(2,1) != 8 &&  
+        board.return_value(2,2) != 9       
+            puts "Tie Game!"
+            break
+    end 
     board.play_game(player_two.choose_number, board, player_two.piece)
     if board.return_value(0,0) == player_two.piece && board.return_value(1,0) == player_two.piece && board.return_value(2,0) == player_two.piece
         puts "#{player_two.name} wins!"
@@ -187,5 +197,71 @@ loop do
         puts "#{player_two.name} wins!"
         break
     end 
+    if board.return_value(0,0) != 1 &&   
+        board.return_value(0,1) != 2 &&  
+        board.return_value(0,2) != 3 &&  
+        board.return_value(1,0) != 4 &&  
+        board.return_value(1,1) != 5 &&  
+        board.return_value(1,2) != 6 &&  
+        board.return_value(2,0) != 7 &&  
+        board.return_value(2,1) != 8 &&  
+        board.return_value(2,2) != 9       
+            puts "Tie Game!"
+            break
+    end 
 end 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ######THIS STUFF IS FOR LATER
+# loop do 
+#     play_game(player_one.choose_number, board, player_one.piece)
+#     take_a_turn(player_two.choose_number, board, player_two.piece)
+# end 
+
+
+# def take_a_turn(number, board, player_piece)
+#     board.play_game(number, board, player_piece)
+#     if board.return_value(0,0) == player_piece && board.return_value(1,0) == player_piece && board.return_value(2,0) == player_one
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(0,1) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,1) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(0,2) == player_piece && board.return_value(1,2) == player_piece && board.return_value(2,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(0,0) == player_piece && board.return_value(0,1) == player_piece && board.return_value(0,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(1,0) == player_piece && board.return_value(1,1) == player_piece && board.return_value(1,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(2,0) == player_piece && board.return_value(2,1) == player_piece && board.return_value(2,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(0,0) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     elsif board.return_value(0,2) == player_piece && board.return_value(1,1) == player_piece && board.return_value(1,2) == player_piece
+#         puts "#{player_piece} wins!"
+#     end 
+#     if board.return_value(0,0) != 1 &&   
+#         board.return_value(0,1) != 2 &&  
+#         board.return_value(0,2) != 3 &&  
+#         board.return_value(1,0) != 4 &&  
+#         board.return_value(1,1) != 5 &&  
+#         board.return_value(1,2) != 6 &&  
+#         board.return_value(2,0) != 7 &&  
+#         board.return_value(2,1) != 8 &&  
+#         board.return_value(2,2) != 9       
+#             puts "Tie Game!"
+#     end 
+# end 
