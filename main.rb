@@ -6,7 +6,13 @@ module AskPlayer
     
     def ask_piece(player)
         puts "#{player} would you like X or O?"
-        @piece = gets.chomp
+        piece = gets.chomp
+        if piece == "X" || piece == "O"
+            @piece = piece
+        else 
+            puts "NOT X OR O"
+            ask_piece(player)
+        end 
     end     
 
     def choose_number
@@ -21,6 +27,30 @@ module AskPlayer
     end     
 end 
 
+module GameFunctions
+    def play_game(number, board, player_piece)
+        if number == 1
+            board.update_board(0,0, player_piece)    
+        elsif number == 2
+            board.update_board(0,1, player_piece)
+        elsif number == 3
+            board.update_board(0,2, player_piece)
+        elsif number == 4
+            board.update_board(1,0, player_piece)
+        elsif number == 5
+            board.update_board(1,1, player_piece)
+        elsif number == 6
+            board.update_board(1,2, player_piece)
+        elsif number == 7
+            board.update_board(2,0, player_piece)
+        elsif number == 8
+            board.update_board(2,1, player_piece)
+        else
+            board.update_board(2,2, player_piece)
+        end 
+    end 
+end 
+
 class Player
     include AskPlayer
     
@@ -33,6 +63,8 @@ class Player
 end 
 
 class Board
+    include GameFunctions
+
     attr_accessor :board
 
     def showboard
@@ -57,7 +89,7 @@ class Board
 
     def drawboard
         @board.each do |row|
-            print '| '
+            print "| "
             row.each do |value|
                 print "#{value} | "
             end 
@@ -65,102 +97,94 @@ class Board
         end 
     end 
     
-    def update_board(index_one, index_two, new_number)
-        @board[index_one][index_two] = new_number
+    def update_board(index_one, index_two, new_value)
+        if @board[index_one][index_two] != "X" && @board[index_one][index_two] != "O"
+            @board[index_one][index_two] = new_value
+        else
+            puts "INVALID SPACE, TRY AGAIN"
+            value = gets.chomp
+        end 
         drawboard
     end 
-
+ 
     def return_value(index_one, index_two)
         @board[index_one][index_two]
     end 
 end 
 
+
 board = Board.new
 board.array_values
 board.drawboard
-# board.update_board(1,1,'x')
 
-player_one = Player.new('','')
-player_two = Player.new('','')
+player_one = Player.new("","")
+player_two = Player.new("","")
 player_one.ask_name
 player_two.ask_name
+
 player_one.ask_piece(player_one.name)
 player_two.ask_piece(player_two.name)
 
-
-def play_game(number, board, player)
-    if number == 1
-        board.update_board(0,0, player.piece)    
-    elsif number == 2
-        board.update_board(0,1, player.piece)
-    elsif number == 3
-        board.update_board(0,2, player.piece)
-    elsif number == 4
-        board.update_board(1,0, player.piece)
-    elsif number == 5
-        board.update_board(1,1, player.piece)
-    elsif number == 6
-        board.update_board(1,2, player.piece)
-    elsif number == 7
-        board.update_board(2,0, player.piece)
-    elsif number == 8
-        board.update_board(2,1, player.piece)
-    else
-        board.update_board(2,2, player.piece)
+loop do 
+    if player_two.piece == player_one.piece
+        puts "Sorry, that symbol is unavailable"
+        player_two.ask_piece(player_two.name)
+    else 
+        break
     end 
 end 
 
 loop do
-    play_game(player_one.choose_number, board, player_one)
-    if board.return_value(0,0) == 'X' && board.return_value(1,0) == 'X' && board.return_value(2,0) == 'X'
-        puts 'X wins!'
+    board.play_game(player_one.choose_number, board, player_one.piece)
+    if board.return_value(0,0) == player_one.piece && board.return_value(1,0) == player_one.piece && board.return_value(2,0) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,1) == 'X' && board.return_value(1,1) == 'X' && board.return_value(2,1) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(0,1) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,1) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,2) == 'X' && board.return_value(1,2) == 'X' && board.return_value(2,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,2) == player_one.piece && board.return_value(2,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,0) == 'X' && board.return_value(0,1) == 'X' && board.return_value(0,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(0,0) == player_one.piece && board.return_value(0,1) == player_one.piece && board.return_value(0,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(1,0) == 'X' && board.return_value(1,1) == 'X' && board.return_value(1,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(1,0) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(1,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(2,0) == 'X' && board.return_value(2,1) == 'X' && board.return_value(2,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(2,0) == player_one.piece && board.return_value(2,1) == player_one.piece && board.return_value(2,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,0) == 'X' && board.return_value(1,1) == 'X' && board.return_value(2,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(0,0) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
-    elsif board.return_value(0,2) == 'X' && board.return_value(1,1) == 'X' && board.return_value(1,2) == 'X'
-        puts 'X wins!'
+    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(1,2) == player_one.piece
+        puts "#{player_one.name} wins!"
         break
     end 
-    play_game(player_two.choose_number, board, player_two)
-    if board.return_value(0,0) == 'O' && board.return_value(1,0) == 'O' && board.return_value(2,0) == 'O'
-        puts 'O wins!'
+    board.play_game(player_two.choose_number, board, player_two.piece)
+    if board.return_value(0,0) == player_two.piece && board.return_value(1,0) == player_two.piece && board.return_value(2,0) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,1) == 'O' && board.return_value(1,1) == 'O' && board.return_value(2,1) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(0,1) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,1) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,2) == 'O' && board.return_value(1,2) == 'O' && board.return_value(2,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,2) == player_two.piece && board.return_value(2,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,0) == 'O' && board.return_value(0,1) == 'O' && board.return_value(0,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(0,0) == player_two.piece && board.return_value(0,1) == player_two.piece && board.return_value(0,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(1,0) == 'O' && board.return_value(1,1) == 'O' && board.return_value(1,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(1,0) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(1,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(2,0) == 'O' && board.return_value(2,1) == 'O' && board.return_value(2,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(2,0) == player_two.piece && board.return_value(2,1) == player_two.piece && board.return_value(2,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,0) == 'O' && board.return_value(1,1) == 'O' && board.return_value(2,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(0,0) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
-    elsif board.return_value(0,2) == 'O' && board.return_value(1,1) == 'O' && board.return_value(1,2) == 'O'
-        puts 'O wins!'
+    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(1,2) == player_two.piece
+        puts "#{player_two.name} wins!"
         break
     end 
 end 
