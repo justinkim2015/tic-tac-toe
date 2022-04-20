@@ -27,34 +27,6 @@ module AskPlayer
     end     
 end 
 
-module GameFunctions
-    def play_game(number, board, player_piece)
-        if number == 1 && (board.return_value(0,0) != 'X' && board.return_value(0,0) != 'O')
-            board.update_board(0,0, player_piece)    
-        elsif number == 2 && (board.return_value(0,1) != 'X' && board.return_value(0,1) != 'O')
-            board.update_board(0,1, player_piece)
-        elsif number == 3 && (board.return_value(0,2) != 'X' && board.return_value(0,2) != 'O')
-            board.update_board(0,2, player_piece)
-        elsif number == 4 && (board.return_value(1,0) != 'X' && board.return_value(1,0) != 'O')
-            board.update_board(1,0, player_piece)
-        elsif number == 5 && (board.return_value(1,1) != 'X' && board.return_value(1,1) != 'O')
-            board.update_board(1,1, player_piece)
-        elsif number == 6 && (board.return_value(1,2) != 'X' && board.return_value(1,2) != 'O')
-            board.update_board(1,2, player_piece)
-        elsif number == 7 && (board.return_value(2,0) != 'X' && board.return_value(2,0) != 'O')
-            board.update_board(2,0, player_piece)
-        elsif number == 8 && (board.return_value(2,1) != 'X' && board.return_value(2,1) != 'O')
-            board.update_board(2,1, player_piece)
-        elsif number == 9 && (board.return_value(2,2) != 'X' && board.return_value(2,2) != 'O')
-            board.update_board(2,2, player_piece)
-        else 
-            puts "INVALID PLACEMENT, INPUT AGAIN"
-            new_number = gets.chomp.to_i
-            play_game(new_number, board, player_piece)
-        end 
-    end 
-end 
-
 class Player
     include AskPlayer
     
@@ -67,8 +39,6 @@ class Player
 end 
 
 class Board
-    include GameFunctions
-
     attr_accessor :board
 
     def showboard
@@ -108,6 +78,66 @@ class Board
  
     def return_value(index_one, index_two)
         @board[index_one][index_two]
+    end 
+
+    def play_game(number, board, player_piece)
+        if board.position_empty?(number) 
+            board.place_piece(number, player_piece)   
+        else 
+            puts "INVALID PLACEMENT, INPUT AGAIN"
+            new_number = gets.chomp.to_i
+            play_game(new_number, board, player_piece)
+        end 
+    end 
+
+    def value_via(number)
+        if number == 1
+            @board[0][0]
+        elsif number == 2
+            @board[0][1]
+        elsif number == 3
+            @board[0][2]
+        elsif number == 4
+            @board[1][0]
+        elsif number == 5
+            @board[1][1]
+        elsif number == 6
+            @board[1][2]
+        elsif number == 7
+            @board[2][0]
+        elsif number == 8
+            @board[2][1]
+        elsif number == 9
+            @board[2][2]
+        end
+    end  
+
+    def position_empty?(number)
+        if self.value_via(number) != 'X' && self.value_via(number) != 'O'
+            return true
+        end 
+    end 
+
+    def place_piece(number, player_piece)
+        if number == 1
+            self.update_board(0,0, player_piece)  
+        elsif number == 2  
+            self.update_board(0,1, player_piece)
+        elsif number == 3  
+            self.update_board(0,2, player_piece)
+        elsif number == 4  
+            self.update_board(1,0, player_piece)
+        elsif number == 5  
+            self.update_board(1,1, player_piece)
+        elsif number == 6  
+            self.update_board(1,2, player_piece)
+        elsif number == 7  
+            self.update_board(2,0, player_piece)
+        elsif number == 8  
+            self.update_board(2,1, player_piece)
+        elsif number == 9  
+            self.update_board(2,2, player_piece)
+        end 
     end 
 end 
 
