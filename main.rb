@@ -76,10 +76,6 @@ class Board
         drawboard
     end 
  
-    def return_value(index_one, index_two)
-        @board[index_one][index_two]
-    end 
-
     def play_game(number, board, player_piece)
         if board.position_empty?(number) 
             board.place_piece(number, player_piece)   
@@ -139,12 +135,51 @@ class Board
             self.update_board(2,2, player_piece)
         end 
     end 
+
+    def is_winner?(piece, player)
+        if self.value_via(1) == piece && self.value_via(2) == piece && self.value_via(3) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(4) == piece && self.value_via(5) == piece && self.value_via(6) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(7) == piece && self.value_via(8) == piece && self.value_via(9) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(1) == piece && self.value_via(4) == piece && self.value_via(7) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(2) == piece && self.value_via(5) == piece && self.value_via(8) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(3) == piece && self.value_via(6) == piece && self.value_via(9) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(1) == piece && self.value_via(5) == piece && self.value_via(9) == piece
+            puts "#{player} wins!"
+            true
+        elsif self.value_via(7) == piece && self.value_via(5) == piece && self.value_via(3) == piece
+            puts "#{player} wins!"
+            true
+        end 
+    end 
+
+    def is_tie?
+        if self.value_via(1) != 1 &&   
+            self.value_via(2) != 2 &&  
+            self.value_via(3) != 3 &&  
+            self.value_via(4) != 4 &&  
+            self.value_via(5) != 5 &&  
+            self.value_via(6) != 6 &&  
+            self.value_via(7) != 7 &&  
+            self.value_via(8) != 8 &&  
+            self.value_via(9) != 9       
+                puts "Tie Game!"
+                true
+        end
+    end  
+    
 end 
-
-
-board = Board.new
-board.array_values
-board.drawboard
 
 player_one = Player.new("","")
 player_two = Player.new("","")
@@ -152,6 +187,10 @@ player_one.ask_name
 player_two.ask_name
 player_one.ask_piece(player_one.name)
 player_two.ask_piece(player_two.name)
+
+board = Board.new
+board.array_values
+board.drawboard
 
 loop do 
     if player_two.piece == player_one.piece
@@ -164,134 +203,15 @@ end
 
 loop do
     board.play_game(player_one.choose_number, board, player_one.piece)
-    if board.return_value(0,0) == player_one.piece && board.return_value(1,0) == player_one.piece && board.return_value(2,0) == player_one.piece
-        puts "#{player_one.name} wins!"
+    if board.is_winner?(player_one.piece, player_one.name)
         break
-    elsif board.return_value(0,1) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,1) == player_one.piece
-        puts "#{player_one.name} wins!"
+    elsif board.is_tie?
         break
-    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,2) == player_one.piece && board.return_value(2,2) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    elsif board.return_value(0,0) == player_one.piece && board.return_value(0,1) == player_one.piece && board.return_value(0,2) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    elsif board.return_value(1,0) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(1,2) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    elsif board.return_value(2,0) == player_one.piece && board.return_value(2,1) == player_one.piece && board.return_value(2,2) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    elsif board.return_value(0,0) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,2) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    elsif board.return_value(0,2) == player_one.piece && board.return_value(1,1) == player_one.piece && board.return_value(2,0) == player_one.piece
-        puts "#{player_one.name} wins!"
-        break
-    end 
-    if board.return_value(0,0) != 1 &&   
-        board.return_value(0,1) != 2 &&  
-        board.return_value(0,2) != 3 &&  
-        board.return_value(1,0) != 4 &&  
-        board.return_value(1,1) != 5 &&  
-        board.return_value(1,2) != 6 &&  
-        board.return_value(2,0) != 7 &&  
-        board.return_value(2,1) != 8 &&  
-        board.return_value(2,2) != 9       
-            puts "Tie Game!"
-            break
     end 
     board.play_game(player_two.choose_number, board, player_two.piece)
-    if board.return_value(0,0) == player_two.piece && board.return_value(1,0) == player_two.piece && board.return_value(2,0) == player_two.piece
-        puts "#{player_two.name} wins!"
+    if board.is_winner?(player_one.piece, player_one.name)
         break
-    elsif board.return_value(0,1) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,1) == player_two.piece
-        puts "#{player_two.name} wins!"
+    elsif board.is_tie?
         break
-    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,2) == player_two.piece && board.return_value(2,2) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    elsif board.return_value(0,0) == player_two.piece && board.return_value(0,1) == player_two.piece && board.return_value(0,2) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    elsif board.return_value(1,0) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(1,2) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    elsif board.return_value(2,0) == player_two.piece && board.return_value(2,1) == player_two.piece && board.return_value(2,2) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    elsif board.return_value(0,0) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,2) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    elsif board.return_value(0,2) == player_two.piece && board.return_value(1,1) == player_two.piece && board.return_value(2,0) == player_two.piece
-        puts "#{player_two.name} wins!"
-        break
-    end 
-    if board.return_value(0,0) != 1 &&   
-        board.return_value(0,1) != 2 &&  
-        board.return_value(0,2) != 3 &&  
-        board.return_value(1,0) != 4 &&  
-        board.return_value(1,1) != 5 &&  
-        board.return_value(1,2) != 6 &&  
-        board.return_value(2,0) != 7 &&  
-        board.return_value(2,1) != 8 &&  
-        board.return_value(2,2) != 9       
-            puts "Tie Game!"
-            break
     end 
 end 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ######THIS STUFF IS FOR LATER
-# loop do 
-#     play_game(player_one.choose_number, board, player_one.piece)
-#     take_a_turn(player_two.choose_number, board, player_two.piece)
-# end 
-
-
-# def take_a_turn(number, board, player_piece)
-#     board.play_game(number, board, player_piece)
-#     if board.return_value(0,0) == player_piece && board.return_value(1,0) == player_piece && board.return_value(2,0) == player_one
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,1) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,1) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,2) == player_piece && board.return_value(1,2) == player_piece && board.return_value(2,2) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,0) == player_piece && board.return_value(0,1) == player_piece && board.return_value(0,2) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(1,0) == player_piece && board.return_value(1,1) == player_piece && board.return_value(1,2) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(2,0) == player_piece && board.return_value(2,1) == player_piece && board.return_value(2,2) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,0) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,2) == player_piece
-#         puts "#{player_piece} wins!"
-#     elsif board.return_value(0,2) == player_piece && board.return_value(1,1) == player_piece && board.return_value(2,0) == player_piece
-#         puts "#{player_piece} wins!"
-#     end 
-#     if board.return_value(0,0) != 1 &&   
-#         board.return_value(0,1) != 2 &&  
-#         board.return_value(0,2) != 3 &&  
-#         board.return_value(1,0) != 4 &&  
-#         board.return_value(1,1) != 5 &&  
-#         board.return_value(1,2) != 6 &&  
-#         board.return_value(2,0) != 7 &&  
-#         board.return_value(2,1) != 8 &&  
-#         board.return_value(2,2) != 9       
-#             puts "Tie Game!"
-#     end 
-# end 
